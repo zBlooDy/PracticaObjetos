@@ -1,0 +1,39 @@
+import dr_casa_t1.*
+
+describe "Dr. Casa - Temporada 1" {
+    var frank
+    var logan
+    var lupus
+    var otitis
+    var malaria500
+    var malaria800
+
+    method initialize() {
+        frank = new Persona(cantidadCelulas = 3500000, temperatura = 36)
+        logan = new Persona(cantidadCelulas = 3000000, temperatura = 36)
+        
+        lupus = new EnfermedadAutoInmune(celulasAmenazadas = 10000)
+        otitis = new EnfermedadInfecciosa(celulasAmenazadas = 100)
+        malaria500 = new EnfermedadInfecciosa(celulasAmenazadas = 500)
+        malaria800 = new EnfermedadInfecciosa(celulasAmenazadas = 800)
+        
+        logan.contraer(lupus)
+        logan.contraer(otitis)
+        logan.contraer(malaria500)
+    }
+
+    test "Punto 1 - Frank contrae malaria800" {
+        frank.contraer(malaria800)
+        assert.that(frank.tiene(malaria800))
+    }
+
+    test "Punto 2 - La malaria se reproduce" {
+        malaria500.reproducirse()
+        assert.equals(1000, malaria500.celulasAmenazadas())
+    }
+
+    test "Punto 3a - Logan vive un dia y verificar si la enfermedad es agresiva" {
+        logan.pasarDia()
+        
+    }
+}
