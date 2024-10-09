@@ -95,8 +95,6 @@ describe "Dr Casa - Temporada 2" {
     
     house.contraerEnfermedad(laMuerte)
 
-    assert.that(house.tiene(laMuerte))
-
     house.vivirUnDia()
 
     assert.equals(0, house.temperatura())

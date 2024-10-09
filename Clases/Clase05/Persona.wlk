@@ -64,6 +64,8 @@ class Persona {
   method morir() {
     temperatura = 0
   }
+
+  method temperatura() = temperatura
 }
 
 class Medico inherits Persona {

@@ -12,7 +12,8 @@ class Enfermedad {
 
 object laMuerte {
 
-  
+  method cantidadCelulasAmenazadas() = 0
+
   method afectar(unaPersona) {
     unaPersona.morir()
   }
@@ -22,6 +23,8 @@ object laMuerte {
   }
 
   method esAgresivaPara(_unaPersona) = true
+
+  method estaCurada() = false
 }
 
 
