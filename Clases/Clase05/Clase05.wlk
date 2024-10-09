@@ -88,3 +88,5 @@ class JefeDepartamento {
     subordinados.anyOne().atenderA(unaPersona)
   }
 }
+
+// commit de prueba
