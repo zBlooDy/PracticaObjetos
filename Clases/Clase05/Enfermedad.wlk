@@ -10,6 +10,20 @@ class Enfermedad {
   method estaCurada() = cantidadCelulasAmenazadas <= 0
 }
 
+object laMuerte {
+
+  
+  method afectar(unaPersona) {
+    unaPersona.morir()
+  }
+
+  method atenuarse(_unaCantidad) {
+    
+  }
+
+  method esAgresivaPara(_unaPersona) = true
+}
+
 
 // Como tuve comportamiento repetido (atenuarse) entre enfermedad infecciosa y autoinmune, entonces necesite "cosificar" a esta interfaz conocida como Enfermedad.
 

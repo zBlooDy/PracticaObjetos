@@ -1,4 +1,4 @@
-import enfermedades.Enfermedad.*
+import Enfermedad.*
 
 class EnfermedadAutoinmune inherits Enfermedad {
   

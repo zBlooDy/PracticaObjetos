@@ -1,11 +1,16 @@
-import personas.Medico.*
+import Medico.*
 
 class JefeDepartamento inherits Medico(cantidadDosis = 0) {
 
   const subordinados = []
 
-  method atenderA(unaPersona) {
+  override method atenderA(unaPersona) {
     subordinados.anyOne().atenderA(unaPersona)
+  }
+
+
+  method subordinar(unaPersona) {
+    subordinados.add(unaPersona)
   }
 }
 

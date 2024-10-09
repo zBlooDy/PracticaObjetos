@@ -1,8 +1,7 @@
-import enfermedades.Enfermedad.*
+import Enfermedad.*
 
 class EnfermedadInfecciosa inherits Enfermedad{
   
-
   method reproducirse() {
     cantidadCelulasAmenazadas *= 2
   }

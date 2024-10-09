@@ -1,85 +1,20 @@
-import Clase05.*
-import enfermedades.Enfermedad.*
-import enfermedades.EnfermedadInfecciosa.*
-import enfermedades.EnfermedadAutoinmune.*
-
-// describe "Dr Casa - Temporada 1" {
-
-//   const frank = new Persona(temperatura = 36, cantidadCelulas = 3000000)
-//   const logan = new Persona(temperatura = 36, cantidadCelulas = 3500000)
-
-//   const otitis100 = new EnfermedadInfecciosa(cantidadCelulasAmenazadas = 100)
-//   const malaria500 = new EnfermedadInfecciosa(cantidadCelulasAmenazadas = 500)
-//   const malaria800 = new EnfermedadInfecciosa(cantidadCelulasAmenazadas = 800)
-//   const lupus10000 = new EnfermedadAutoinmune(cantidadCelulasAmenazadas = 10000)
-  
-//   method initialize() {
-//     frank.contraerEnfermedad(malaria800)
-    
-//     logan.contraerEnfermedad(malaria500)
-//     logan.contraerEnfermedad(otitis100)
-//     logan.contraerEnfermedad(lupus10000)
-//   }
-
-//   test "1. Cuando Frank contrae una enfermedad esta se agrega a sus enfermedades" {
-//     assert.that(frank.tiene(malaria800))
-//   }
-
-//   test "2. Cuando una enfermedad infecciosa se reproduce duplica su cantidad de celulas amenazadas" {
-//     malaria500.reproducirse()
-
-//     assert.equals(1000, malaria500.cantidadCelulasAmenazadas())
-//   }
-
-//   test "3.a Logan vive un día estando enfermo y aumenta la cantidad total de celulas afectadas por enfermedades agresivas" {
-//     logan.vivirUnDia()
-
-//     assert.equals(0, logan.cantidadCelulasAfectadasPorEnfermedadesAgresivas())
-//   }
-
-//   test "3.b Logan vive un día estando enfermo y la enfermedad de logan que más celulas afecta es el lupus" {
-//     logan.vivirUnDia()
-
-//     assert.equals(lupus10000, logan.enfermedadQueMasCelulasAfecta())
-//   }
-
-//   test "3.c Logan vive un día estando enfermo y logan no está en coma" {
-//     logan.vivirUnDia()
-
-//     assert.notThat(logan.estaEnComa())
-//   }
-
-//   test "4.a Logan vive un día estando enfermo y aumenta la cantidad total de celulas afectadas por enfermedades agresivas" {
-//     logan.vivir(31)
-
-//     assert.equals(0, logan.cantidadCelulasAfectadasPorEnfermedadesAgresivas())
-//   }
-
-//   test "4.b Logan vive un día estando enfermo y la enfermedad de logan que más celulas afecta es el lupus" {
-//     logan.vivir(31)
-
-//     assert.equals(lupus10000, logan.enfermedadQueMasCelulasAfecta())
-//   }
-
-//   test "4.c Logan vive un día estando enfermo y logan no está en coma" {
-//     logan.vivir(31)
-
-//     assert.that(logan.estaEnComa())
-//   }
-// }
+import Persona.*
+import Enfermedad.*
+import EnfermedadAutoinmune.*
+import EnfermedadInfecciosa.*
 
 describe "Dr Casa - Temporada 2" {
-
-  const frank = new Persona(temperatura = 36, cantidadCelulas = 3000000)
-  const logan = new Persona(temperatura = 36, cantidadCelulas = 3500000)
 
   const otitis100 = new EnfermedadInfecciosa(cantidadCelulasAmenazadas = 100)
   const malaria500 = new EnfermedadInfecciosa(cantidadCelulasAmenazadas = 500)
   const malaria800 = new EnfermedadInfecciosa(cantidadCelulasAmenazadas = 800)
   const lupus10000 = new EnfermedadAutoinmune(cantidadCelulasAmenazadas = 10000)
 
-  const cameron = new Medico(cantidadDosis = 10, temperatura = 36.5, cantidadCelulas = 2999000)
-  const house = new JefeDepartamento(cantidadDosis = 10, temperatura = 36.5, cantidadCelulas = 2999000)
+
+  const frank = new Persona(temperatura = 36, cantidadCelulas = 3000000)
+  const logan = new Persona(temperatura = 36, cantidadCelulas = 3500000)
+  const cameron = new Medico(cantidadDosis = 10, temperatura = 37, cantidadCelulas = 2999000)
+  const house = new JefeDepartamento(temperatura = 37, cantidadCelulas = 3000000)
   
   method initialize() {
     frank.contraerEnfermedad(malaria800)
@@ -87,6 +22,9 @@ describe "Dr Casa - Temporada 2" {
     logan.contraerEnfermedad(malaria500)
     logan.contraerEnfermedad(otitis100)
     logan.contraerEnfermedad(lupus10000)
+
+    house.subordinar(cameron)
+
   }
 
   test "1.a Enfermedad Infecciosa se atenua correctamente" {
@@ -101,17 +39,68 @@ describe "Dr Casa - Temporada 2" {
     assert.equals(9500, lupus10000.cantidadCelulasAmenazadas())
   }
 
-  test "2. Un medico atiende correctamente" {
+  test "2.a Cameron atiende a Logan y atenua malaria500" {
     
     cameron.atenderA(logan) 
 
     assert.equals(350, malaria500.cantidadCelulasAmenazadas())
   }
 
-  test "3.a Jefe de departamento atiende a una persona" {
-    const cameron = new Medico(cantidadDosis = 10)
-    const house = new JefeDepartamento()
+  test "2.b Cameron atiende a Logan y cura otitis" {
+    
+    cameron.atenderA(logan) 
+
+    assert.notThat(logan.tiene(otitis100))
+  }
+
+  test "3.a House atiende a Cameron" {
 
     house.atenderA(cameron)
+
+    cameron.contraerEnfermedad(malaria800)
+
+    assert.equals(650, malaria800.cantidadCelulasAmenazadas())
+
   }
+  test "3.b House atiende a Logan y cura otitis" {
+
+    house.subordinar(cameron)
+
+    house.atenderA(logan)
+
+    assert.notThat(logan.tiene(otitis100))
+  }
+
+  test "4.a Cameron contrae malaria (al ser medico se autoatiende)" {
+
+    cameron.contraerEnfermedad(malaria500)
+    
+    assert.that(cameron.tiene(malaria500))
+
+    assert.equals(350, malaria500.cantidadCelulasAmenazadas())
+
+  }
+
+  test "4.b House contrae malaria (al ser medico se autoatiende)" {
+
+    house.contraerEnfermedad(malaria500)
+    
+    assert.that(house.tiene(malaria500))
+
+    assert.equals(350, malaria500.cantidadCelulasAmenazadas())
+
+  }
+
+  test "5. House contrae la muerte" {
+    
+    house.contraerEnfermedad(laMuerte)
+
+    assert.that(house.tiene(laMuerte))
+
+    house.vivirUnDia()
+
+    assert.equals(0, house.temperatura())
+  }
+
+
 }
