@@ -69,17 +69,15 @@ class Persona {
 
   method temperatura() = temperatura
 
-// < ------------------- Dr Casa Temporada 3 ------------------- >  
+// < ------------- Dr Casa Temporada 3 ------------- >  
 
 // Me pide que cuando no se pueda donar, tenga que informar
 // Yo estoy haciendo algo en el IF, entonces no puedo devolver
 
   method donarA(otraPersona, cantidadADonar) {
-    // No hace nada o tira una excepcion
-    self.verificarCantidadCelulas(cantidadADonar)
-    self.verificarCompatibilidad(otraPersona)
+    verificarCantidadCelulas(cantidadADonar)
 
-    // Si tiro una excepcion, esto no ejecuta
+
     cantidadCelulas =- cantidadADonar
     otraPersona.aumentarCelulas(cantidadADonar)
 
@@ -87,13 +85,7 @@ class Persona {
 
   method verificarCantidadCelulas(cantidadADonar) {
     if(!self.tieneSuficientesCelulas(cantidadADonar)) {
-      throw new DomainException(message = "Te faltan celulas!")
-    }
-  }
-
-  method verificarCompatibilidad(otraPersona) {
-    if(!self.esCompatibleCon(otraPersona)) {
-      throw new DomainException(message = "No son compatibles!")
+      throw new DomainException(message = "Lo vas a matar")
     }
   }
 

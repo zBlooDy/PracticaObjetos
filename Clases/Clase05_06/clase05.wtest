@@ -102,3 +102,17 @@ describe "Dr Casa - Temporada 2" {
 
 
 }
+
+describe "Dr Casa - Temporada 3" {
+  const logan = new Persona(temperatura = 36, cantidadCelulas = 3500000)
+  const cameron = new Medico(cantidadDosis = 10, temperatura = 37, cantidadCelulas = 2999000)
+  
+  test "Cameron le dona a Logan y falla" {
+    assert.throwsException {
+      cameron.donarA(logan, 10000000)
+    }
+  }
+
+  /* Tengo que hacer un bloque porque sino va a evaluar lo que le mando
+  y va a fallar, entonces no llega a hacer el asser.throwsException */
+}
